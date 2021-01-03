@@ -38,6 +38,9 @@ int main()
             {
                 if (turn % 2 == 0)
                 {
+                    cout<<"King position "<<xKing1<<", "<<yKing1<<endl;
+                    cout<<"Rook1 position "<<xRook1<<", "<<yRook1<<endl;
+                    cout<<"Rook2 position "<<xRook2<<", "<<yRook2<<endl;
                     playerMove();
                     turn++;
                     printBoard();
@@ -186,10 +189,12 @@ void playerMove()
     int x, y;
     do
     {
-        cout<<"Current king position "<<xKing1<<", "<<yKing1<<endl;
+        // cout<<"King position "<<xKing1<<", "<<yKing1<<endl;
+        // cout<<"Rook1 position "<<xRook1<<", "<<yRook1<<endl;
+        // cout<<"Rook2 position "<<xRook2<<", "<<yRook2<<endl;
         cout<<"Your turn, enter coordinates in format P X Y"<<endl;
         cin>>figure>>x>>y;
-        if (x < 0 || y < 0 || x > boardSize || y > boardSize)
+        if (x < 0 || y < 0 || x >= boardSize || y >= boardSize)
         {
             cout << "Invalid coordinates" << endl;
         }
@@ -212,15 +217,37 @@ void playerMove()
         }
         else if (figure == '1')
         {
-            //to do
-            xRook1 = x;
-            yRook1 = y;
+            if ((x == xKing1 && y == yKing1) || (x == xRook2 && y == yRook2))
+            {
+                cout<<"Illegal move, a piece has already occupied this square"<<endl;
+            }
+            else if ((x == xRook1 && y != yRook1) || (x != xRook1 && y == yRook1))
+            {
+                xRook1 = x;
+                yRook1 = y;
+                break;
+            }
+            else
+            {
+                cout << "Illegal move" << endl;
+            }
         }
         else if (figure == '2')
         {
-            //to copy
-            xRook2 = x;
-            yRook2 = y;
+            if ((x == xKing1 && y == yKing1) || (x == xRook1 && y == yRook1))
+            {
+                cout<<"Illegal move, a piece has already occupied this square"<<endl;
+            }
+            else if ((x == xRook2 && y != yRook2) || (x != xRook2 && y == yRook2))
+            {
+                xRook2 = x;
+                yRook2 = y;
+                break;
+            }
+            else
+            {
+                cout << "Illegal move" << endl;
+            }
         }
         else
         {
