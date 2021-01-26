@@ -17,13 +17,12 @@
 #include <ctime>
 #include <cstdlib>
 #include <string>
-using std::cout; //cstdlib breaks the using namespace std;
+using std::cout;
 using std::endl;
 
 char board[100][100];
 int xKing1, yKing1, xKing2, yKing2, xRook1, yRook1, xRook2, yRook2;
-int boardSize = 8, newSize;
-int turn = 1; //cpu playes first
+int boardSize = 8, turn = 1; //cpu playes first;
 bool isRunning = 1, draw, mate, capturedR1, capturedR2;
 
 void changeBoardSize();
@@ -73,11 +72,11 @@ int main()
             }
             if (mate)
             {
-                cout << "MATE in " << turn / 2<< " moves" << endl; //logic about turns could be wrong
+                cout << "MATE in " << turn / 2 << " moves" << endl; //logic about turns could be wrong
             }
             else if (draw)
             {
-                cout << "STALEMATE in " << turn / 2<< " moves" << endl;
+                cout << "STALEMATE in " << turn / 2 << " moves" << endl;
             }
         }
         else if (option == 2)
@@ -108,6 +107,7 @@ void displayStartingScreen()
 }
 void changeBoardSize()
 {
+    int newSize;
     cout << "Enter the new board size" << endl;
     std::cin >> newSize;
     while (newSize == boardSize)
@@ -157,7 +157,8 @@ void genRook2()
     {
         xRook2 = (rand() % boardSize) + 0;
         yRook2 = (rand() % boardSize) + 0;
-    } while ((xRook2 == xKing2 && yRook2 == yKing2) || (xRook2 == xKing1 && yRook2 == yKing1) || (xRook2 == xRook1 && yRook2 == yRook1));
+    } while ((xRook2 == xKing2 && yRook2 == yKing2) || (xRook2 == xKing1 && yRook2 == yKing1) ||
+             (xRook2 == xRook1 && yRook2 == yRook1));
     //cout<<"Rook2 spawned at "<<xRook2<<", "<<yRook2<<endl;
 }
 void generateFigures() //so we dont call 'em one by one in main
@@ -226,7 +227,8 @@ void playerMove()
             {
                 cout << "The king doesnt move" << endl;
             }
-            else if ((x >= xKing2 - 1 && x <= xKing2 + 1) && (y >= yKing2 - 1 && y <= yKing2 + 1) || (x == xRook1 && y == yRook1) || (x == xRook2 && y == yRook2))
+            else if ((x >= xKing2 - 1 && x <= xKing2 + 1) && (y >= yKing2 - 1 && y <= yKing2 + 1) ||
+                     (x == xRook1 && y == yRook1) || (x == xRook2 && y == yRook2))
             {
                 cout << "Illegal move" << endl;
             }
@@ -290,9 +292,11 @@ void cpuMove()
 {
     if (xKing2 == xRook1 || xKing2 == xRook2 || yKing2 == yRook1 || yKing2 == yRook2)
     {
-        if ((xRook1 >= xKing2 - 1 && xRook1 <= xKing2 + 1) && (yRook1 >= yKing2 - 1 && yRook1 <= yKing2 + 1))
+        if ((xRook1 >= xKing2 - 1 && xRook1 <= xKing2 + 1) && 
+            (yRook1 >= yKing2 - 1 && yRook1 <= yKing2 + 1))
         {
-            if (xRook1 != xRook2 && yRook1 != yRook2 && (xRook1 < xKing1 - 1 || xRook1 > xKing1 + 1 || xRook1 < yKing1 - 1 || xRook1 > yKing1 + 1)) //check if rook1 is defended
+            if (xRook1 != xRook2 && yRook1 != yRook2 && (xRook1 < xKing1 - 1 || xRook1 > xKing1 + 1 ||
+                 xRook1 < yKing1 - 1 || xRook1 > yKing1 + 1)) //check if rook1 is defended
             {
                 xKing2 = xRook1;
                 yKing2 = yRook1;
@@ -301,9 +305,11 @@ void cpuMove()
                 yRook1 = -1;
             }
         }
-        else if ((xRook2 >= xKing2 - 1 && xRook2 <= xKing2 + 1) && (yRook2 >= yKing2 - 1 && yRook2 <= yKing2 + 1))
+        else if ((xRook2 >= xKing2 - 1 && xRook2 <= xKing2 + 1) && 
+                 (yRook2 >= yKing2 - 1 && yRook2 <= yKing2 + 1))
         {
-            if (xRook1 != xRook2 && yRook1 != yRook2 && (xRook2 < xKing1 - 1 || xRook2 > xKing1 + 1 || xRook2 < yKing1 - 1 || xRook2 > yKing1 + 1)) //check is rook2 is defended
+            if (xRook1 != xRook2 && yRook1 != yRook2 && (xRook2 < xKing1 - 1 ||
+                 xRook2 > xKing1 + 1 || xRook2 < yKing1 - 1 || xRook2 > yKing1 + 1)) //check if rook2 is defended
             {
                 xKing2 = xRook2;
                 yKing2 = yRook2;
@@ -318,9 +324,11 @@ void cpuMove()
             cpuKingMove();
         }
     }
-    else if ((xRook1 >= xKing2 - 1 && xRook1 <= xKing2 + 1) && (yRook1 >= yKing2 - 1 && yRook1 <= yKing2 + 1)) //check if king is next to rook1
+    else if ((xRook1 >= xKing2 - 1 && xRook1 <= xKing2 + 1) &&
+             (yRook1 >= yKing2 - 1 && yRook1 <= yKing2 + 1)) //check if king is next to rook1
     {
-        if (xRook1 != xRook2 && yRook1 != yRook2 && (xRook1 < xKing1 - 1 || xRook1 > xKing1 + 1 || xRook1 < yKing1 - 1 || xRook1 > yKing1 + 1)) //check if rook1 is defended
+        if (xRook1 != xRook2 && yRook1 != yRook2 && 
+            (xRook1 < xKing1 - 1 || xRook1 > xKing1 + 1 || xRook1 < yKing1 - 1 || xRook1 > yKing1 + 1)) //check if rook1 is defended
         {
             xKing2 = xRook1;
             yKing2 = yRook1;
@@ -334,9 +342,11 @@ void cpuMove()
             cpuKingMove();
         }
     }
-    else if ((xRook2 >= xKing2 - 1 && xRook2 <= xKing2 + 1) && (yRook2 >= yKing2 - 1 && yRook2 <= yKing2 + 1)) //check if king is next to rook2
+    else if ((xRook2 >= xKing2 - 1 && xRook2 <= xKing2 + 1) && 
+             (yRook2 >= yKing2 - 1 && yRook2 <= yKing2 + 1)) //check if king is next to rook2
     {
-        if (xRook1 != xRook2 && yRook1 != yRook2 && (xRook2 < xKing1 - 1 || xRook2 > xKing1 + 1 || xRook2 < yKing1 - 1 || xRook2 > yKing1 + 1)) //check is rook2 is defended
+        if (xRook1 != xRook2 && yRook1 != yRook2 && 
+            (xRook2 < xKing1 - 1 || xRook2 > xKing1 + 1 || xRook2 < yKing1 - 1 || xRook2 > yKing1 + 1)) //check is rook2 is defended
         {
             xKing2 = xRook2;
             yKing2 = yRook2;
@@ -358,20 +368,56 @@ void cpuMove()
 }
 void cpuKingMove()
 {
-    if (xKing2 - 1 != xRook1 && xKing2 - 1 != xRook2 && xKing2 - 1 != xKing1 + 1 && xKing2 - 1 >= 0 && yKing2 != yRook1 && yKing2 != yRook2)
+    if (xKing2 - 1 != xRook1 && xKing2 - 1 != xRook2 && xKing2 - 1 != xKing1 + 1 && xKing2 - 1 >= 0 &&
+         yKing2 != yRook1 && yKing2 != yRook2)
     {
         xKing2--;
     }
-    else if (xKing2 + 1 != xRook1 && xKing2 + 1 != xRook2 && xKing2 + 1 != xKing1 - 1 && xKing2 + 1 < boardSize && yKing2 != yRook1 && yKing2 != yRook2)
+    else if (xKing2 + 1 != xRook1 && xKing2 + 1 != xRook2 && xKing2 + 1 != xKing1 - 1 &&
+             xKing2 + 1 < boardSize && yKing2 != yRook1 && yKing2 != yRook2)
     {
         xKing2++;
     }
-    else if (yKing2 - 1 != yRook1 && yKing2 - 1 != yRook2 && yKing2 - 1 != yKing1 + 1 && yKing2 - 1 >= 0 && xKing2 != xRook1 && xKing2 != xRook2)
+    else if (yKing2 - 1 != yRook1 && yKing2 - 1 != yRook2 && yKing2 - 1 != yKing1 + 1 && 
+             yKing2 - 1 >= 0 && xKing2 != xRook1 && xKing2 != xRook2)
     {
         yKing2--;
     }
-    else if (yKing2 + 1 != yRook1 && yKing2 + 1 != yRook2 && yKing2 + 1 != yKing1 - 1 && yKing2 + 1 < boardSize && xKing2 != xRook1 && xKing2 != xRook2)
+    else if (yKing2 + 1 != yRook1 && yKing2 + 1 != yRook2 && yKing2 + 1 != yKing1 - 1 &&
+             yKing2 + 1 < boardSize && xKing2 != xRook1 && xKing2 != xRook2)
     {
+        yKing2++;
+    }
+    else if ((xKing2 - 1 != xRook1 && xKing2 - 1 != xRook2 && xKing2 - 1 != xKing1 + 1 &&
+              xKing2 - 1 >= 0) && (yKing2 - 1 != yRook1 && yKing2 - 1 != yRook2 &&
+              yKing2 - 1 != yKing1 + 1 && yKing2 - 1 >= 0) && (yKing2 != yRook1 && yKing2 != yRook2) &&
+             (xKing2 != xRook1 && xKing2 != xRook2))
+    {
+        xKing2--;
+        yKing2--;
+    }
+    else if ((xKing2 - 1 != xRook1 && xKing2 - 1 != xRook2 && xKing2 - 1 != xKing1 + 1 &&
+             xKing2 - 1 >= 0) && (yKing2 + 1 != yRook1 && yKing2 + 1 != yRook2 &&
+             yKing2 + 1 != yKing1 - 1 && yKing2 + 1 < boardSize) && (yKing2 != yRook1 && yKing2 != yRook2) &&
+             (xKing2 != xRook1 && xKing2 != xRook2))
+    {
+        xKing2--;
+        yKing2++;
+    }
+    else if ((xKing2 + 1 != xRook1 && xKing2 + 1 != xRook2 && xKing2 + 1 != xKing1 - 1 && 
+              xKing2 + 1 < boardSize) && (yKing2 - 1 != yRook1 && yKing2 - 1 != yRook2 &&
+              yKing2 - 1 != yKing1 + 1 && yKing2 - 1 >= 0) && (yKing2 != yRook1 && yKing2 != yRook2) && 
+              (xKing2 != xRook1 && xKing2 != xRook2))
+    {
+        xKing2++;
+        yKing2--;
+    }
+    else if ((xKing2 + 1 != xRook1 && xKing2 + 1 != xRook2 && xKing2 + 1 != xKing1 - 1 &&
+             xKing2 + 1 < boardSize) && (yKing2 + 1 != yRook1 && yKing2 + 1 != yRook2 &&
+             yKing2 + 1 != yKing1 - 1 && yKing2 + 1 < boardSize) && 
+             (yKing2 != yRook1 && yKing2 != yRook2) && (xKing2 != xRook1 && xKing2 != xRook2))
+    {
+        xKing2++;
         yKing2++;
     }
     else if (xKing2 == xRook1 || xKing2 == xRook2 || yKing2 == yRook1 || yKing2 == yRook2)
@@ -385,7 +431,7 @@ void cpuKingMove()
     else if (xKing2 != xRook1 && xKing2 != xRook2 && yKing2 != yRook1 && yKing2 != yRook2)
     {
         //not in check and cant move 1 tile = stalemate
-        if (xKing2 - 1 < 0 || yKing2 - 1 < 0 || xKing2 + 1 == boardSize || yKing2 + 1 == boardSize)
+        if (xKing2 - 1 < 0 || yKing2 - 1 < 0 || xKing2 + 1 == boardSize || yKing2 + 1 == boardSize) //bug
         {
             draw = 1;
         }
@@ -395,26 +441,4 @@ void cpuKingMove()
         cout << "I died beep boop" << endl;
         mate = 1; //if we got this far, something is not right
     }
-
-    /* initialize diagonal movement after fixing all other problems
-    else if ((xKing2 - 1 != xRook1 && xKing2 - 1 != xRook2 && xKing2 - 1 != xKing1 + 1 && xKing2 - 1 >= 0) && (yKing2 - 1 != yRook1 && yKing2 - 1 != yRook2 && yKing2 - 1 != yKing1 + 1 && yKing2 - 1 >= 0))
-    {
-        xKing2--;
-        yKing2--;
-    }
-    else if ((xKing2 - 1 != xRook1 && xKing2 - 1 != xRook2 && xKing2 - 1 != xKing1 + 1 && xKing2 - 1 >= 0) && (yKing2 + 1 != yRook1 && yKing2 + 1 != yRook2 && yKing2 + 1 != yKing1 - 1 && yKing2 + 1 < boardSize))
-    {
-        xKing2--;
-        yKing2++;
-    }
-    else if ((xKing2 + 1 != xRook1 && xKing2 + 1 != xRook2 && xKing2 + 1 != xKing1 - 1 && xKing2 + 1 < boardSize) && (yKing2 - 1 != yRook1 && yKing2 - 1 != yRook2 && yKing2 - 1 != yKing1 + 1 && yKing2 - 1 >= 0))
-    {
-        xKing2++;
-        yKing2--;
-    }
-    else if ((xKing2 + 1 != xRook1 && xKing2 + 1 != xRook2 && xKing2 + 1 != xKing1 - 1 && xKing2 + 1 < boardSize) && (yKing2 + 1 != yRook1 && yKing2 + 1 != yRook2 && yKing2 + 1 != yKing1 - 1 && yKing2 + 1 < boardSize))
-    {
-        xKing2++;
-        yKing2++;
-    }*/
 }
